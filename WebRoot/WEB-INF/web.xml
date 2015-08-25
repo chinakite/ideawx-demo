@@ -3,23 +3,6 @@
   
     <display-name>IdeaWxDemo</display-name>
     
-    <filter>  
-        <filter-name>wxOauthFilter</filter-name>  
-        <filter-class>com.ideamoment.wx.webauth.filter.WxOauthFilter</filter-class>  
-        <init-param>  
-            <param-name>accessableChecker</param-name>  
-            <param-value>com.ideamoment.wanr.wx.filter.OauthEventListener</param-value>  
-        </init-param>
-        <init-param>  
-            <param-name>scope</param-name>  
-            <param-value>base</param-value>  
-        </init-param>
-    </filter>  
-    <filter-mapping>  
-        <filter-name>wxOauthFilter</filter-name>  
-        <url-pattern>/wx/*</url-pattern>  
-    </filter-mapping>
-    
     <servlet-mapping> 
         <servlet-name>default</servlet-name> 
         <url-pattern>*.html</url-pattern> 
@@ -67,7 +50,7 @@
     
     <servlet> 
         <servlet-name>wxServlet</servlet-name> 
-        <servlet-class>com.ideamoment.wx.event.IdeaWxEventServlet</servlet-class>
+        <servlet-class>com.ideamoment.wx.receiver.IdeaWxReceiverServlet</servlet-class>
         <load-on-startup>1</load-on-startup> 
     </servlet>
     
@@ -75,18 +58,6 @@
         <servlet-name>wxServlet</servlet-name> 
         <url-pattern>/wxevent</url-pattern> 
     </servlet-mapping>
-    
-    <servlet> 
-        <servlet-name>wxOauthServlet</servlet-name> 
-        <servlet-class>com.ideamoment.wx.event.IdeaWxEventServlet</servlet-class>
-        
-        <init-param>  
-            <param-name>eventListener</param-name>  
-            <param-value>com.ideamoment.wanr.ideawxdemo.filter.OauthEventListener</param-value>  
-        </init-param>
-        
-        <load-on-startup>2</load-on-startup> 
-    </servlet>
     
     <mime-mapping>
         <extension>png</extension>

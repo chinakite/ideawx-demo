@@ -3,6 +3,9 @@
  */
 package com.ideamoment.ideawxdemo.event;
 
+import java.util.Date;
+
+import com.ideamoment.wx.config.IdeaWxConfig;
 import com.ideamoment.wx.receiver.EventReceiver;
 import com.ideamoment.wx.receiver.model.WxImageMessage;
 import com.ideamoment.wx.receiver.model.WxLinkMessage;
@@ -18,6 +21,7 @@ import com.ideamoment.wx.receiver.model.WxVideoMessage;
 import com.ideamoment.wx.receiver.model.WxVoiceMessage;
 import com.ideamoment.wx.sender.model.WxNullMessage;
 import com.ideamoment.wx.sender.model.WxSendMessage;
+import com.ideamoment.wx.sender.model.WxSendTextMessage;
 
 
 /**
@@ -34,7 +38,13 @@ public class WanrEventReceiver implements EventReceiver {
         System.out.println("Receive subscribe event.");
         System.out.println("Subscribe openid [" + event.getFromUserName() + "]");
         
-        return new WxNullMessage();
+        WxSendTextMessage returnMsg = new WxSendTextMessage();
+        returnMsg.setToUserName(event.getFromUserName());
+        returnMsg.setFromUserName(IdeaWxConfig.get("ideawx.originalid", null));
+        returnMsg.setCreateTime((new Date()).getTime());
+        returnMsg.setContent("嗨，这里是招聘宝官方微信。招聘宝是集移动传播、HR互动、海量简历于一身的一站式招聘管理平台。在这里，我们会定期推送有用的资讯、趣味活动、HR工作技巧等，助力HR更快更准找人才！感谢您的关注！");
+        
+        return returnMsg;
     }
 
     /* (non-Javadoc)
@@ -84,8 +94,24 @@ public class WanrEventReceiver implements EventReceiver {
     }
 
     @Override
-    public WxSendMessage textMessage(WxTextMessage arg0) {
-        return new WxNullMessage();
+    public WxSendMessage textMessage(WxTextMessage message) {
+        if(message.getContent().startsWith("日企")) {
+            WxSendTextMessage returnMsg = new WxSendTextMessage();
+            returnMsg.setToUserName(message.getFromUserName());
+            returnMsg.setFromUserName(IdeaWxConfig.get("ideawx.originalid", null));
+            returnMsg.setCreateTime((new Date()).getTime());
+            returnMsg.setContent("恭喜！您已成功参与招聘宝举办的“太君，八路托我给您带个话儿……”有奖回复活动！中奖结果择日公布，敬请期待！");
+            
+            return returnMsg;
+        }else{
+            WxSendTextMessage returnMsg = new WxSendTextMessage();
+            returnMsg.setToUserName(message.getFromUserName());
+            returnMsg.setFromUserName(IdeaWxConfig.get("ideawx.originalid", null));
+            returnMsg.setCreateTime((new Date()).getTime());
+            returnMsg.setContent("嗨，这里是招聘宝官方微信。招聘宝是集移动传播、HR互动、海量简历于一身的一站式招聘管理平台。在这里，我们会定期推送有用的资讯、趣味活动、HR工作技巧等，助力HR更快更准找人才！感谢您的关注！");
+            
+            return returnMsg;
+        }
     }
 
     @Override
