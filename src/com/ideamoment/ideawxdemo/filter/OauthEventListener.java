@@ -19,16 +19,16 @@ public class OauthEventListener implements WxOAuthEventListener{
     @Override
     public void afterGetUserInfo(ServletRequest req,
                                  ServletResponse resp,
-                                 WxUser arg2) {
-
+                                 WxUser user) {
+        
         
     }
 
     @Override
     public void afterGotOpenId(ServletRequest req,
                                ServletResponse resp,
-                               String arg2,
-                               String arg3) {
+                               String openId,
+                               String accessToken) {
 
         
     }

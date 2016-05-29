@@ -53,7 +53,6 @@
         <servlet-class>com.ideamoment.wx.receiver.IdeaWxReceiverServlet</servlet-class>
         <load-on-startup>1</load-on-startup> 
     </servlet>
-    
     <servlet-mapping> 
         <servlet-name>wxServlet</servlet-name> 
         <url-pattern>/wxevent</url-pattern> 

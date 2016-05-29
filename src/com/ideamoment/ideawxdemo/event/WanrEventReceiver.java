@@ -30,6 +30,9 @@ import com.ideamoment.wx.sender.model.WxSendTextMessage;
  */
 public class WanrEventReceiver implements EventReceiver {
 
+//    String welcomeStr = "终于等到你，还好我没放弃！欢迎关注大易招聘圈。";
+    String welcomeStr = "你好，欢迎关注招聘宝。招聘宝是一款全免费使用的招聘管理系统，它能够实现移动传播、HR互动、海量简历以及一站式招聘管理。在这里，我们会定期推送有用的资讯、趣味活动、HR工作技巧等，助力HR更快更准找人才！感谢您的关注！";
+    
     /* (non-Javadoc)
      * @see com.ideamoment.wx.event.EventReceiver#subscribeEvent(com.ideamoment.wx.event.bean.WxSubscribeEvent)
      */
@@ -42,7 +45,7 @@ public class WanrEventReceiver implements EventReceiver {
         returnMsg.setToUserName(event.getFromUserName());
         returnMsg.setFromUserName(IdeaWxConfig.get("ideawx.originalid", null));
         returnMsg.setCreateTime((new Date()).getTime());
-        returnMsg.setContent("嗨，这里是招聘宝官方微信。招聘宝是集移动传播、HR互动、海量简历于一身的一站式招聘管理平台。在这里，我们会定期推送有用的资讯、趣味活动、HR工作技巧等，助力HR更快更准找人才！感谢您的关注！");
+        returnMsg.setContent(welcomeStr);
         
         return returnMsg;
     }
@@ -95,23 +98,26 @@ public class WanrEventReceiver implements EventReceiver {
 
     @Override
     public WxSendMessage textMessage(WxTextMessage message) {
-        if(message.getContent().startsWith("日企")) {
-            WxSendTextMessage returnMsg = new WxSendTextMessage();
-            returnMsg.setToUserName(message.getFromUserName());
-            returnMsg.setFromUserName(IdeaWxConfig.get("ideawx.originalid", null));
-            returnMsg.setCreateTime((new Date()).getTime());
-            returnMsg.setContent("恭喜！您已成功参与招聘宝举办的“太君，八路托我给您带个话儿……”有奖回复活动！中奖结果择日公布，敬请期待！");
-            
-            return returnMsg;
-        }else{
-            WxSendTextMessage returnMsg = new WxSendTextMessage();
-            returnMsg.setToUserName(message.getFromUserName());
-            returnMsg.setFromUserName(IdeaWxConfig.get("ideawx.originalid", null));
-            returnMsg.setCreateTime((new Date()).getTime());
-            returnMsg.setContent("嗨，这里是招聘宝官方微信。招聘宝是集移动传播、HR互动、海量简历于一身的一站式招聘管理平台。在这里，我们会定期推送有用的资讯、趣味活动、HR工作技巧等，助力HR更快更准找人才！感谢您的关注！");
-            
-            return returnMsg;
+        WxSendTextMessage returnMsg = new WxSendTextMessage();
+        returnMsg.setToUserName(message.getFromUserName());
+        returnMsg.setFromUserName(IdeaWxConfig.get("ideawx.originalid", null));
+        returnMsg.setCreateTime((new Date()).getTime());
+        
+//        if(message.getContent().startsWith("日企")) {
+//            returnMsg.setContent("恭喜！您已成功参与招聘宝举办的“太君，八路托我给您带个话儿……”有奖回复活动！中奖结果择日公布，敬请期待！");
+//        }else 
+        if(message.getContent().indexOf("猜角色") > -1) {
+            returnMsg.setContent("人人都想当D—猜角色（HR版），答案如下：\nA: HR薪酬经理\nB：HR绩效经理\nC：HR员工关系经理\nD：HR总监\nE：HR招聘经理\n欣赏完整版HR故事：http://w.url.cn/s/Ajf5Wul");
+        }else if(message.getContent().indexOf("猜成语") > -1) {
+            returnMsg.setContent("“朋友圈猜成语”答案揭晓\n据说全猜对才是移动端达人哦！看你能猜对几个？\n\n1、喜上眉梢\n2、妖魔鬼怪\n……\n查看全部：http://w.url.cn/s/A3sDs72");
+        }else if(message.getContent().indexOf("面试答案") > -1) {
+            returnMsg.setContent("“全球只有1%的人能答对的求职面试题”【答案揭晓：http://w.url.cn/s/Aqqttvr】");
         }
+        else{
+            returnMsg.setContent(welcomeStr);
+        }
+        
+        return returnMsg;
     }
 
     @Override
